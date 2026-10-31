@@ -1,0 +1,128 @@
+<div class="employee-container">
+
+    <div class="page-header">
+        <div>
+            <h1>Employees</h1>
+            <p>Manage your employees here</p>
+        </div>
+
+        <button class="add-button" (click)="showAddEmployeeForm = !showAddEmployeeForm">
+            + Add Employee
+        </button>
+
+    </div>
+
+
+    @if (showAddEmployeeForm) {
+    <div class="employee-form">
+
+        <h2>{{ isEditMode ? 'Edit Employee' : 'Add New Employee' }}</h2>
+
+        <form (ngSubmit)="isEditMode ? updateEmployee() : addEmployee()">>
+
+            <input type="text" name="name" placeholder="Employee Name" [(ngModel)]="newEmployee.name" required />
+
+            <input type="email" name="email" placeholder="Email Address" [(ngModel)]="newEmployee.email" required />
+
+            <select name="department" [(ngModel)]="newEmployee.department" required>
+                <option value="">Select Department</option>
+                <option value="IT">IT</option>
+                <option value="HR">HR</option>
+                <option value="Finance">Finance</option>
+                <option value="Sales">Sales</option>
+            </select>
+
+            <div class="form-group">
+                <label for="dateOfJoining">Date of Joining</label>
+
+                <input type="date" id="dateOfJoining" name="dateOfJoining" [(ngModel)]="newEmployee.dateOfJoining"
+                    required />
+            </div>
+
+            <div class="form-group">
+                <label for="status">Employee Status</label>
+
+                <select id="status" name="status" [(ngModel)]="newEmployee.status" required>
+                    <option value="Active">Active</option>
+                    <option value="On Leave">On Leave</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+
+            <input type="text" name="designation" placeholder="Designation" [(ngModel)]="newEmployee.designation"
+                required />
+
+            <button type="submit" class="add-button">
+                Save Employee
+            </button>
+
+            <button type="button" class="cancel-button" (click)="cancelForm()">
+                Cancel
+            </button>
+
+        </form>
+    </div>
+    }
+
+
+    <div class="search-container">
+        <input type="text" placeholder="Search employees..." [(ngModel)]="searchText" />
+    </div>
+
+
+    <div class="table-container">
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Designation</th>
+                    <th>Date of Joining</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (employee of filteredEmployees; track employee.id) {
+                <tr>
+                    <td>{{ employee.id }}</td>
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.email }}</td>
+                    <td>{{ employee.department }}</td>
+                    <td>{{ employee.designation }}</td>
+                    <td>{{ employee.dateOfJoining }}</td>
+                    <td>
+                        <span class="status-badge" [class.active]="employee.status === 'Active'"
+                            [class.on-leave]="employee.status === 'On Leave'"
+                            [class.inactive]="employee.status === 'Inactive'">
+                            {{ employee.status }}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="edit-button" (click)="editEmployee(employee)">
+                            Edit
+                        </button>
+
+                        <button class="delete-button" (click)="deleteEmployee(employee.id)">
+                            Delete
+                        </button>
+
+                    </td>
+                </tr>
+                }
+
+                @if (filteredEmployees.length === 0) {
+                <tr>
+                    <td colspan="6">No employees found.</td>
+                </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
