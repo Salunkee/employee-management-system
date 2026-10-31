@@ -1,10 +1,11 @@
-FROM gradle:9.8.2-jdk26 AS build
+FROM eclipse-temurin:26-jdk AS build
 
 WORKDIR /app
 
 COPY . .
 
-RUN gradle bootJar --no-daemon
+RUN chmod +x gradlew
+RUN ./gradlew bootJar --no-daemon
 
 FROM eclipse-temurin:26-jre
 
@@ -14,4 +15,4 @@ COPY --from=build /app/build/libs/*.jar app.jar
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
