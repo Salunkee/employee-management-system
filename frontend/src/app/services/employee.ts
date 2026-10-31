@@ -1,6 +1,7 @@
 
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 export interface Employee {
     id: number;
@@ -17,7 +18,7 @@ export interface Employee {
 })
 export class EmployeeService {
 
-    private apiUrl = 'http://localhost:8080/api/employees';
+    private apiUrl = environment.apiUrl;
 
     employees = signal<Employee[]>([]);
 
@@ -48,6 +49,6 @@ export class EmployeeService {
     }
 
     deleteEmployee(id: number) {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-}
+        return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    }
 }
