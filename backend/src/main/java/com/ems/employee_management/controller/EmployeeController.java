@@ -13,7 +13,8 @@ import java.util.List;
 @RequestMapping("/api/employees")
 @CrossOrigin(origins = {
         "http://localhost:4200",
-        "https://employee-management-system-98x.pages.dev"
+        "https://employee-management-system-98x.pages.dev",
+        "https://*.employee-management-system-98x.pages.dev"
 })
 public class EmployeeController {
 
