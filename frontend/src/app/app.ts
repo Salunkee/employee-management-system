@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { SideBar } from './components/side-bar/side-bar';
 
 @Component({
@@ -9,5 +9,7 @@ import { SideBar } from './components/side-bar/side-bar';
   templateUrl: './app.html',
 })
 export class App {
+  constructor(public router: Router) { }
+
   protected readonly title = signal('Employee Management System');
 }

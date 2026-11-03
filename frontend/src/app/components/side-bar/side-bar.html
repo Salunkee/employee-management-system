@@ -1,26 +1,43 @@
-
 <div class="sidebar">
 
-  <div class="sidebar-header">
+ <div class="sidebar-header">
+
+  <div class="header-top">
     <h2>EMS</h2>
-    <p>Employee Management Portal</p>
+
+    <button
+      class="logout-icon"
+      (click)="logout()"
+      title="Logout"
+      aria-label="Logout"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="20" height="20"
+           viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="2"
+           stroke-linecap="round"
+           stroke-linejoin="round">
+        <path d="M10 17l5-5-5-5" />
+        <path d="M15 12H3" />
+        <path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6" />
+      </svg>
+    </button>
   </div>
+
+  <p>Employee Management Portal</p>
+
+</div>
 
   <nav class="navigation">
 
-    <a
-      routerLink="/dashboard"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
+    <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
       <span class="nav-icon">▦</span>
       <span>Dashboard</span>
     </a>
 
-    <a
-      routerLink="/employees"
-      routerLinkActive="active"
-    >
+    <a routerLink="/employees" routerLinkActive="active">
       <span class="nav-icon">👥</span>
       <span>Employees</span>
     </a>

@@ -1,8 +1,7 @@
 
-import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { inject } from '@angular/core';
 import { EmployeeService, Employee } from '../services/employee';
+import { Component, OnInit, inject } from '@angular/core';
 
 
 @Component({
@@ -11,7 +10,7 @@ import { EmployeeService, Employee } from '../services/employee';
   templateUrl: './employees.html',
   styleUrl: './employees.css',
 })
-export class Employees {
+export class Employees implements OnInit {
 
   employeeService = inject(EmployeeService);
 
@@ -34,6 +33,9 @@ export class Employees {
   // Stores the ID of the employee being edited
   editingEmployeeId: number | null = null;
 
+  get employeeCount() {
+    return this.employeeService.employees().length;
+  }
 
   get filteredEmployees() {
     const search = this.searchText.toLowerCase().trim();
@@ -46,6 +48,13 @@ export class Employees {
     );
   }
 
+  ngOnInit() {
+    this.employeeService.loadEmployees();
+  }
+
+  get userRole(): string {
+    return sessionStorage.getItem('role') || '';
+  }
 
   addEmployee() {
     this.employeeService.addEmployee(this.newEmployee).subscribe({
@@ -86,32 +95,32 @@ export class Employees {
 
   updateEmployee() {
     if (this.editingEmployeeId === null) {
-        return;
+      return;
     }
 
     this.employeeService.updateEmployee(
-        this.editingEmployeeId,
-        this.newEmployee
+      this.editingEmployeeId,
+      this.newEmployee
     ).subscribe({
-        next: (updatedEmployee) => {
-            this.employeeService.employees.update(employees =>
-                employees.map(employee =>
-                    employee.id === updatedEmployee.id
-                        ? updatedEmployee
-                        : employee
-                )
-            );
+      next: (updatedEmployee) => {
+        this.employeeService.employees.update(employees =>
+          employees.map(employee =>
+            employee.id === updatedEmployee.id
+              ? updatedEmployee
+              : employee
+          )
+        );
 
-            this.cancelForm();
+        this.cancelForm();
 
-            alert('Employee updated successfully!');
-        },
-        error: (error) => {
-            console.error('Error updating employee:', error);
-            alert('Failed to update employee.');
-        }
+        alert('Employee updated successfully!');
+      },
+      error: (error) => {
+        console.error('Error updating employee:', error);
+        alert('Failed to update employee.');
+      }
     });
-}
+  }
 
   cancelForm() {
     this.showAddEmployeeForm = false;
@@ -132,27 +141,27 @@ export class Employees {
   deleteEmployee(employeeId: number) {
 
     const confirmDelete = confirm(
-        'Are you sure you want to delete this employee?'
+      'Are you sure you want to delete this employee?'
     );
 
     if (confirmDelete) {
 
-        this.employeeService.deleteEmployee(employeeId).subscribe({
-            next: () => {
-                this.employeeService.employees.update(employees =>
-                    employees.filter(employee => employee.id !== employeeId)
-                );
+      this.employeeService.deleteEmployee(employeeId).subscribe({
+        next: () => {
+          this.employeeService.employees.update(employees =>
+            employees.filter(employee => employee.id !== employeeId)
+          );
 
-                alert('Employee deleted successfully!');
-            },
-            error: (error) => {
-                console.error('Error deleting employee:', error);
-                alert('Failed to delete employee.');
-            }
-        });
+          alert('Employee deleted successfully!');
+        },
+        error: (error) => {
+          console.error('Error deleting employee:', error);
+          alert('Failed to delete employee.');
+        }
+      });
 
     }
-}
+  }
 
 
 

@@ -4,7 +4,9 @@ package com.ems.employee_management.controller;
 import com.ems.employee_management.entity.Employee;
 import com.ems.employee_management.service.EmployeeService;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -21,28 +23,34 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    // Get all employees
+    // ADMIN, HR and USER can view all employees
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'HR', 'USER')")
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 
-    // Get employee by ID
+    // ADMIN, HR and USER can view an employee by ID
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'HR', 'USER')")
     public Employee getEmployeeById(@PathVariable Long id) {
         return employeeService.getEmployeeById(id);
     }
 
-    // Add a new employee
+    // ADMIN and HR can add employees
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'HR')")
     public Employee addEmployee(@RequestBody Employee employee) {
         return employeeService.saveEmployee(employee);
     }
 
-    // Update an employee
+    // ADMIN and HR can update employees
     @PutMapping("/{id}")
-    public Employee updateEmployee(@PathVariable Long id,
+    @PreAuthorize("hasAnyRole('ADMIN', 'HR')")
+    public Employee updateEmployee(
+            @PathVariable Long id,
             @RequestBody Employee employee) {
+
         Employee existingEmployee = employeeService.getEmployeeById(id);
 
         existingEmployee.setName(employee.getName());
@@ -55,8 +63,9 @@ public class EmployeeController {
         return employeeService.saveEmployee(existingEmployee);
     }
 
-    // Delete an employee
+    // Only ADMIN can delete employees
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
     }

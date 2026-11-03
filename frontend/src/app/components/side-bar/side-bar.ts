@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   imports: [RouterLink, RouterLinkActive],
@@ -7,4 +8,14 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './side-bar.css',
   templateUrl: './side-bar.html',
 })
-export class SideBar {}
+export class SideBar {
+  constructor(private router: Router) {}
+
+  logout() {
+  sessionStorage.removeItem('token');
+  sessionStorage.removeItem('username');
+  sessionStorage.removeItem('role');
+
+  this.router.navigate(['/login']);
+}
+}

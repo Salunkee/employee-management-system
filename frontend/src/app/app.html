@@ -1,7 +1,8 @@
-
 <div class="app-container">
 
-  <app-side-bar></app-side-bar>
+  @if (!router.url.startsWith('/login')) {
+    <app-side-bar></app-side-bar>
+  }
 
   <main class="main-content">
     <router-outlet></router-outlet>

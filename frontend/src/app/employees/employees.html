@@ -1,3 +1,4 @@
+<p>Employees loaded: {{ employeeCount }}</p>
 <div class="employee-container">
 
     <div class="page-header">
@@ -6,9 +7,11 @@
             <p>Manage your employees here</p>
         </div>
 
+        @if (userRole === 'ADMIN' || userRole === 'HR') {
         <button class="add-button" (click)="showAddEmployeeForm = !showAddEmployeeForm">
             + Add Employee
         </button>
+        }
 
     </div>
 
@@ -18,7 +21,7 @@
 
         <h2>{{ isEditMode ? 'Edit Employee' : 'Add New Employee' }}</h2>
 
-        <form (ngSubmit)="isEditMode ? updateEmployee() : addEmployee()">>
+        <form (ngSubmit)="isEditMode ? updateEmployee() : addEmployee()">
 
             <input type="text" name="name" placeholder="Employee Name" [(ngModel)]="newEmployee.name" required />
 
@@ -103,14 +106,18 @@
                         </span>
                     </td>
                     <td>
+                        @if (userRole === 'ADMIN' || userRole === 'HR') {
                         <button class="edit-button" (click)="editEmployee(employee)">
                             Edit
                         </button>
+                        }
 
+
+                        @if (userRole === 'ADMIN') {
                         <button class="delete-button" (click)="deleteEmployee(employee.id)">
                             Delete
                         </button>
-
+                        }
                     </td>
                 </tr>
                 }
