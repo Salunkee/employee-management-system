@@ -18,7 +18,7 @@ export interface Employee {
 })
 export class EmployeeService {
 
-    private apiUrl = environment.apiUrl;
+    private apiUrl = `${environment.apiUrl}/employees`;
 
     employees = signal<Employee[]>([]);
 
@@ -26,18 +26,18 @@ export class EmployeeService {
     }
 
     loadEmployees() {
-    this.http.get<Employee[]>(this.apiUrl).subscribe({
-        next: (data) => {
-            this.employees.set(data);
-        },
-        error: (error) => {
-            console.error('Error loading employees:', error);
+        this.http.get<Employee[]>(this.apiUrl).subscribe({
+            next: (data) => {
+                this.employees.set(data);
+            },
+            error: (error) => {
+                console.error('Error loading employees:', error);
 
-            // Clear old employee data when API request fails
-            this.employees.set([]);
-        }
-    });
-}
+                // Clear old employee data when API request fails
+                this.employees.set([]);
+            }
+        });
+    }
 
     addEmployee(employee: Omit<Employee, 'id'>) {
         return this.http.post<Employee>(this.apiUrl, employee);
