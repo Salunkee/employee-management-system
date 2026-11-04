@@ -9,6 +9,7 @@ import com.ems.employee_management.repository.UserRepository;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -54,6 +55,31 @@ public class AuthService {
 
             throw new RuntimeException("Invalid username or password");
         }
+
+        String token = jwtService.generateToken(
+                user.getUsername(),
+                user.getRole());
+
+        return new AuthResponse(
+                token,
+                user.getUsername(),
+                user.getRole());
+    }
+
+    public AuthResponse googleLogin(String email) {
+
+        User user = userRepository.findByUsername(email)
+                .orElseGet(() -> {
+                    // Generate a random password for Google-only accounts
+                    String randomPassword = UUID.randomUUID().toString();
+
+                    User newUser = new User(
+                            email,
+                            passwordEncoder.encode(randomPassword),
+                            "USER");
+
+                    return userRepository.save(newUser);
+                });
 
         String token = jwtService.generateToken(
                 user.getUsername(),

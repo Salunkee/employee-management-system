@@ -1,20 +1,24 @@
+
 <div class="login-container">
     <div class="login-card">
 
         <h2>Employee Management System</h2>
         <p>Please sign in to continue</p>
 
+        <!-- Traditional Login -->
         <form (ngSubmit)="onLogin()">
 
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" [(ngModel)]="username"
+                <input type="text" id="username" name="username"
+                    [(ngModel)]="username"
                     placeholder="Enter your username" required />
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" [(ngModel)]="password"
+                <input type="password" id="password" name="password"
+                    [(ngModel)]="password"
                     placeholder="Enter your password" required />
             </div>
 
@@ -27,6 +31,19 @@
             </button>
 
         </form>
+
+        <!-- Separator -->
+        <div class="login-divider">
+            <span>OR</span>
+        </div>
+
+        <!-- Google Login -->
+        <button type="button" class="google-login-button"
+            (click)="loginWithGoogle()">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                 alt="Google logo" />
+            Continue with Google
+        </button>
 
         <p class="signup-link">
             Don't have an account?

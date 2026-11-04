@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://employee-management-backend-6ou0.onrender.com/api'
+  apiUrl: 'https://employee-management-backend-6ou0.onrender.com/api',
+  authServerUrl: 'https://employee-management-backend-6ou0.onrender.com'
 };

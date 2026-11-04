@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment.production';
 
 @Component({
   selector: 'app-login',
@@ -43,5 +44,10 @@ export class Login {
           error.error?.message || 'Invalid username or password';
       }
     });
+  }
+
+  loginWithGoogle(): void {
+    window.location.href =
+      `${environment.authServerUrl}/oauth2/authorization/google`;
   }
 }

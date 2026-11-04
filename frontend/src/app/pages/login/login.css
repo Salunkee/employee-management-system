@@ -99,3 +99,35 @@
     font-size: 22px;
   }
 }
+
+.google-login-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.google-login-button img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.login-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.login-divider span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #777;
+}
