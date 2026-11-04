@@ -1,0 +1,41 @@
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: employee-backend
+  namespace: ems
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: employee-backend
+
+  template:
+    metadata:
+      labels:
+        app: employee-backend
+
+    spec:
+      containers:
+        - name: employee-backend
+
+          image: employee-backend:1.0
+          imagePullPolicy: Never
+
+          ports:
+            - containerPort: 8080
+
+          envFrom:
+            - secretRef:
+                name: ems-secrets
+
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1200Mi"
+              cpu: "1000m"

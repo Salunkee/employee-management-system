@@ -30,7 +30,7 @@
           },
           "configurations": {
             "production": {
-               "fileReplacements": [
+              "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.production.ts"
@@ -48,6 +48,16 @@
                   "maximumError": "8kB"
                 }
               ],
+              "outputHashing": "all"
+            },
+            "minikube": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.minikube.ts"
+                }
+              ],
+              "optimization": true,
               "outputHashing": "all"
             },
             "development": {

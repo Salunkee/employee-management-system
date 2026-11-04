@@ -1,0 +1,15 @@
+.gradle/
+bin/
+.vscode/
+.git/
+
+.env
+.env.*
+*.log
+
+build/classes/
+build/resources/
+build/tmp/
+build/reports/
+build/test-results/
+build/test/
